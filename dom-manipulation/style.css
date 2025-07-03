@@ -1,0 +1,46 @@
+#heading{
+    text-align: center;
+    color: rgb(192, 11, 107);
+    font-size: 32px;
+    font-weight: 900;
+    margin-top: 15%;
+    padding-top: 2%;
+}
+.qoute-info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
+}
+.get-qoute-box{
+    width: 50%;
+    height: 400px;
+    background-color: rgb(235, 234, 234);
+    margin: 0 auto;
+    box-shadow: 2px solid black;
+    border: 2px black;
+}
+#add_quote{
+     color: rgb(255, 253, 255);
+    width:111px ;
+    background-color: fuchsia;
+    padding: 11px 11px;
+    border-radius: 5px;
+    font-size: 14px;
+    border: none;
+    margin-top: 5%
+
+}
+
+#newQuote{
+    color: fuchsia;
+    width:155px ;
+    background-color: rgb(8, 8, 8);
+    padding: 15px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    border: none;
+    margin-top: 9%;
+    
+
+}
