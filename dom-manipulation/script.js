@@ -57,5 +57,78 @@ function createAddQuoteForm() {
 
 document.getElementById("add_quote").addEventListener("click", addQuote);
 
+function importFromJsonFile(event) {
+    const fileReader = new FileReader();
+    fileReader.onload = function(event) {
+      const importedQuotes = JSON.parse(event.target.result);
+      quotes.push(...importedQuotes);
+      saveQuotes();
+      alert('Quotes imported successfully!');
+    };
+    fileReader.readAsText(event.target.files[0]);
+}
+
+function saveQuotesToStorage() {
+  localStorage.setItem("randomQuotes", JSON.stringify(randomQuotes));
+}
+
+function loadQuotesFromStorage() {
+  const storedQuotes = localStorage.getItem("randomQuotes");
+  if (storedQuotes) {
+    quotes = JSON.parse(storedQuotes);
+  }
+}
+
+
+function exportQuotes() {
+  const dataStr = JSON.stringify(randomQuotesuotes, null, 2);
+  const blob = new Blob([dataStr], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "randomQuotes.json";
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
+
+function importQuotes(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    try {
+      const importedQuotes = JSON.parse(e.target.result);
+
+      if (Array.isArray(importedQuotes)) {
+        importedQuotes.forEach(quote => {
+          if (quote.text && quote.category) {
+            randomQuotes.push({ text: quote.text, category: quote.category });
+          }
+        });
+
+        saveQuotesToStorage();
+        alert("Quotes imported successfully!");
+      } else {
+        alert("Invalid JSON format. Must be an array of quote objects.");
+      }
+    } catch (err) {
+      alert("Error reading JSON file.");
+    }
+  };
+
+  reader.readAsText(file);
+}
+
+// Attach event listeners
+document.addEventListener("DOMContentLoaded", function () {
+  loadQuotesFromStorage();
+
+  document.getElementById("exportBtn").addEventListener("click", exportQuotes);
+  document.getElementById("importInput").addEventListener("change", importQuotes);
+});
+
 
 });
