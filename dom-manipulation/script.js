@@ -4,14 +4,16 @@ document.addEventListener('DOMContentLoaded', function () {
   { text: "coke", category: "drinks" }
 ];
 
-document.getElementById("newQuote").addEventListener("click", showNewQuote);
+document.getElementById("newQuote").addEventListener("click", displayRandomQuote);
 
 function showNewQuote() {
   const randomIndex = Math.floor(Math.random() * randomQuotes.length);
   const randquote = randomQuotes[randomIndex];
   document.getElementById("quoteDisplay").innerText = `"${randquote.text}" — ${randquote.category}`;
 }
-
+function displayRandomQuote(){
+    showNewQuote();
+}
 function addQuote(event) {
   event.preventDefault();
   const text = document.getElementById("newQuoteText").value.trim();
