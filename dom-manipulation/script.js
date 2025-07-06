@@ -272,7 +272,7 @@ function showNotification(message, type = "info") {
 }
 
 // Fetch quotes from server
-async function fetchServerQuotes() {
+async function fetchQuotesFromServer() {
   try {
     const response = await fetch(SERVER_ENDPOINT);
     if (!response.ok) throw new Error("Failed to fetch from server");
@@ -340,13 +340,13 @@ Use server version?`);
 }
 
 
-function startSyncInterval() {
-  fetchServerQuotes(); 
-  setInterval(fetchServerQuotes, 15000); 
+function syncQuotes() {
+  fetchQuotesFromServer(); 
+  setInterval(fetchQuotesFromServer, 15000); 
 }
 document.addEventListener("DOMContentLoaded", () => {
   loadQuotesFromStorage();
-  startSyncInterval();
+  syncQuotes();
 });
 
 
