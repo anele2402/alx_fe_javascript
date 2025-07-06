@@ -248,6 +248,106 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("importInput").addEventListener("change", importQuotes);
   document.getElementById("categoryFilter").addEventListener("change", filterQuotes);
 });
+const SERVER_ENDPOINT = "https://mockapi.io/clone/686aecbbe559eba908712b6c"; 
+
+
+// Save to localStorage
+function saveQuotesToStorage() {
+  localStorage.setItem("randomQuotes", JSON.stringify(randomQuotes));
+}
+
+// Load from localStorage
+function loadQuotesFromStorage() {
+  const stored = localStorage.getItem("randomQuotes");
+  randomQuotes = stored ? JSON.parse(stored) : [];
+}
+
+// Show notification
+function showNotification(message, type = "info") {
+  const notification = document.createElement("div");
+  notification.textContent = message;
+  notification.className = `notification ${type}`;
+  document.body.appendChild(notification);
+  setTimeout(() => notification.remove(), 4000);
+}
+
+// Fetch quotes from server
+async function fetchServerQuotes() {
+  try {
+    const response = await fetch(SERVER_ENDPOINT);
+    if (!response.ok) throw new Error("Failed to fetch from server");
+
+    const serverQuotes = await response.json();
+    const merged = mergeQuotes(serverQuotes, randomQuotes);
+    if (merged.updated) {
+      randomQuotes = merged.quotes;
+      saveQuotesToStorage();
+      showNotification("Quotes synced with server. Server changes applied.", "success");
+      if (typeof filterQuotes === "function") filterQuotes();
+    }
+  } catch (error) {
+    console.error("Sync error:", error);
+    showNotification("Failed to sync with server.", "error");
+  }
+}
+
+
+async function pushQuotesToServer() {
+  try {
+    for (const quote of randomQuotes) {
+      await fetch(SERVER_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(quote),
+      });
+    }
+    showNotification("Local quotes pushed to server.", "success");
+  } catch (error) {
+    console.error("Push error:", error);
+    showNotification("Failed to push to server.", "error");
+  }
+}
+
+// Merge server and local quotes with conflict resolution
+function mergeQuotes(serverData, localData) {
+  let updated = false;
+  const merged = [...localData];
+
+  serverData.forEach(serverQuote => {
+    const exists = localData.some(
+      localQuote =>
+        localQuote.text === serverQuote.text &&
+        localQuote.category === serverQuote.category
+    );
+
+    if (!exists) {
+      merged.push(serverQuote);
+      updated = true;
+    }
+  });
+
+  return { quotes: merged, updated };
+}
+
+
+function resolveConflictsManually(serverQuote, localQuote) {
+  const userChoice = confirm(`Conflict detected:
+Server: "${serverQuote.text}" (${serverQuote.category})
+Local: "${localQuote.text}" (${localQuote.category})
+Use server version?`);
+
+  return userChoice ? serverQuote : localQuote;
+}
+
+
+function startSyncInterval() {
+  fetchServerQuotes(); 
+  setInterval(fetchServerQuotes, 15000); 
+}
+document.addEventListener("DOMContentLoaded", () => {
+  loadQuotesFromStorage();
+  startSyncInterval();
+});
 
 
 });
