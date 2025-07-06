@@ -29,6 +29,9 @@ function addQuote(event) {
     alert("Please fill in both fields.");
   }
 }
+function createAddQuoteForm (){
+    addQuote();
+}
 document.getElementById("add_quote").addEventListener("click", addQuote);
 
 
