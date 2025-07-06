@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     
     getQuote.addEventListener('click', function showRandomQuote () {
-        const randQuote = [{ 'barlight': '$15.45' }];
+        const randQuote = ['random', 'innerHTML'];
         const arrayObj = JSON.stringify(randQuote);
         alert(arrayObj);
     });
