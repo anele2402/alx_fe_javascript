@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const newQuoteCategory = document.getElementById('newQuoteCategory');
 
     
-    getQuote.addEventListener('click', function displayRandomQuote () {
-        const randQuote = { 'barlight': '$15.45' };
+    getQuote.addEventListener('click', function showRandomQuote () {
+        const randQuote = [{ 'barlight': '$15.45' }];
         const arrayObj = JSON.stringify(randQuote);
         alert(arrayObj);
     });
