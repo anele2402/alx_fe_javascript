@@ -281,7 +281,7 @@ async function fetchQuotesFromServer() {
     if (merged.updated) {
       randomQuotes = merged.quotes;
       saveQuotesToStorage();
-      showNotification("Quotes synced with server. Server changes applied.", "success");
+      showNotification("Quotes synced with server!", "success");
       if (typeof filterQuotes === "function") filterQuotes();
     }
   } catch (error) {
