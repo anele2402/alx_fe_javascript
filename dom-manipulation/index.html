@@ -26,8 +26,13 @@
 <div class="import-export">
   <button id="exportBtn">Export Quotes (JSON)</button>
 <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
+  <select id="categoryFilter" onchange="filterQuotes()">
+    <option value="all">All Categories</option>
+  
+  </select>
     
 </div>
+
 
 
         
