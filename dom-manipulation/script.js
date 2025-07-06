@@ -248,8 +248,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("importInput").addEventListener("change", importQuotes);
   document.getElementById("categoryFilter").addEventListener("change", filterQuotes);
 });
-const SERVER_ENDPOINT = "https://mockapi.io/clone/686aecbbe559eba908712b6c"; 
-
+const SERVER_ENDPOINT = "https://jsonplaceholder.typicode.com/posts";
 
 // Save to localStorage
 function saveQuotesToStorage() {
