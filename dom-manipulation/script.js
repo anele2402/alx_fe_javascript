@@ -1,28 +1,32 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const getQuote = document.getElementById('newQuote');
-    const addQuote = document.getElementById('add_quote');
-    const newQuoteText = document.getElementById('newQuoteText');
-    const newQuoteCategory = document.getElementById('newQuoteCategory');
+   let randomQuotes = [
+  { text: "rice", category: "food" },
+  { text: "coke", category: "drinks" }
+];
 
-    
-    getQuote.addEventListener('click', function showRandomQuote () {
-        const randQuote = ['random', 'innerHTML'];
-        const arrayObj = JSON.stringify(randQuote);
-        alert(arrayObj);
-    });
+document.getElementById("newQuote").addEventListener("click", showNewQuote);
 
-    
-    addQuote.addEventListener('click', function createAddQuoteForm() {
-        const quote = newQuoteText.value;
-        const category = newQuoteCategory.value;
+function showNewQuote() {
+  const randomIndex = Math.floor(Math.random() * randomQuotes.length);
+  const randquote = randomQuotes[randomIndex];
+  document.getElementById("quoteDisplay").innerText = `"${randquote.text}" — ${randquote.category}`;
+}
 
-        
-        const newQuote = {
-            text: quote,
-            category: category
-        };
+function addQuote(event) {
+  event.preventDefault();
+  const text = document.getElementById("newQuoteText").value.trim();
+  const category = document.getElementById("newQuoteCategory").value.trim();
 
-        localStorage.setItem('Your quote', JSON.stringify(newQuote));
-        alert('Your Quote is: ' + JSON.stringify(newQuote));
-    });
+  if (text && category) {
+    randomQuotes.push({ text, category });
+    document.getElementById("newQuoteText").value = '';
+    document.getElementById("newQuoteCategory").value = '';
+    alert("Quote added!");
+  } else {
+    alert("Please fill in both fields.");
+  }
+}
+document.getElementById("add_quote").addEventListener("click", addQuote);
+
+
 });
