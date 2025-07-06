@@ -69,7 +69,7 @@ function importFromJsonFile(event) {
 }
 
 function saveQuotesToStorage() {
-  localStorage.setItem("randomQuotes", JSON.stringify(randomQuotes));
+  localStorage.getItem("randomQuotes", JSON.stringify(randomQuotes));
 }
 
 function loadQuotesFromStorage() {
