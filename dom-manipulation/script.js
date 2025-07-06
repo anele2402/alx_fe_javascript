@@ -13,6 +13,7 @@ function showNewQuote() {
 }
 function displayRandomQuote(){
     showNewQuote();
+    randomQuote = ['showNewQuote','innerHTML'];
 }
 function addQuote(event) {
   event.preventDefault();
